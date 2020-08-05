@@ -49,4 +49,15 @@ class EventTest <  Minitest::Test
 
     assert_equal expected, @event.food_truck_names
   end
+
+  def test_food_trucks_that_sell
+    @event.add_food_truck(@food_truck1)
+    @event.add_food_truck(@food_truck2)
+    @event.add_food_truck(@food_truck3)
+    expected_item1 = [@food_truck1, @food_truck3]
+    expected_item2 = [@food_truck2]
+
+    assert_equal expected_item1, @event.food_trucks_that_sell(@item1)
+    ssert_equal expected_item2, @event.food_trucks_that_sell(@item4)
+  end
 end
