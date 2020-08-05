@@ -94,4 +94,13 @@ class EventTest <  Minitest::Test
 
     assert_equal expected , @event.sorted_item_list
   end
+
+  def test_overstocked_items
+    @event.add_food_truck(@food_truck1)
+    @event.add_food_truck(@food_truck2)
+    @event.add_food_truck(@food_truck3)
+    expected = [@item1]
+
+    assert_equal expected, @event.overstocked_items
+  end
 end
