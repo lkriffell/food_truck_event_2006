@@ -25,8 +25,8 @@ class FoodTruckTest <  Minitest::Test
   end
 
   def test_stock
-    @food_truck.stock(item1, 30)
-    expected = {item1 => 30}
+    @food_truck.stock(@item1, 30)
+    expected = {@item1 => 30}
 
     assert_equal expected, @food_truck.inventory
   end
