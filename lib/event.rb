@@ -26,28 +26,27 @@ class Event
     end.compact
   end
 
-  # def total_inventory
-  #   all_inventory = Hash.new()
-  #   @food_trucks.each do |truck|
-  #     truck.inventory.each do |item, amount|
-  #       add_to_total_inventory(all_inventory, item, amount, truck)
-  #     end
-  #   end
-  #   all_inventory
-  # end
-  #
-  # def add_to_total_inventory(all_inventory, item, amount, truck)
-  #   if all_inventory[item] == nil
-  #     all_inventory[item] = Hash.new(0)
-  #   else
-  #     all_inventory[item][:quantity] += amount
-  #     if all_inventory[item][:food_trucks] == 0
-  #       all_inventory[item][:food_trucks] = [truck]
-  #     else
-  #       all_inventory[item][:food_trucks] << truck
-  #     end
-  #   end
-  # end
+  def total_inventory
+    all_inventory = Hash.new()
+    collect_items_and_values(all_inventory)
+    all_inventory
+  end
+
+  def collect_items_and_values(all_inventory)
+    @food_trucks.each do |truck|
+      truck.inventory.each do |item, amount|
+        if all_inventory[item] == nil
+          all_inventory[item] = Hash.new(0)
+        end
+        all_inventory[item][:quantity] += amount
+        if all_inventory[item][:food_trucks] == 0
+          all_inventory[item][:food_trucks] = [truck]
+        else
+          all_inventory[item][:food_trucks] << truck
+        end
+      end
+    end
+  end
 
   def sorted_item_list
     item_list = []
@@ -57,5 +56,13 @@ class Event
       end
     end
     item_list.uniq.sort
+  end
+
+  def overstocked_items
+    total_inventory.map do |item, who_sells_how_much|
+      if who_sells_how_much[:quantity] > 50 && who_sells_how_much[:food_trucks].size > 1
+        item
+      end
+    end.compact
   end
 end
