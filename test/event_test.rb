@@ -58,6 +58,6 @@ class EventTest <  Minitest::Test
     expected_item2 = [@food_truck2]
 
     assert_equal expected_item1, @event.food_trucks_that_sell(@item1)
-    ssert_equal expected_item2, @event.food_trucks_that_sell(@item4)
+    assert_equal expected_item2, @event.food_trucks_that_sell(@item4)
   end
 end
