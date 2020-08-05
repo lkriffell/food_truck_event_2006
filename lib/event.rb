@@ -35,16 +35,24 @@ class Event
   def collect_items_and_values(all_inventory)
     @food_trucks.each do |truck|
       truck.inventory.each do |item, amount|
-        if all_inventory[item] == nil
-          all_inventory[item] = Hash.new(0)
-        end
+        check_if_all_item_inventory_is_nil(all_inventory, item)
         all_inventory[item][:quantity] += amount
-        if all_inventory[item][:food_trucks] == 0
-          all_inventory[item][:food_trucks] = [truck]
-        else
-          all_inventory[item][:food_trucks] << truck
-        end
+        collect_food_truck(all_inventory, item, truck)
       end
+    end
+  end
+
+  def check_if_all_item_inventory_is_nil(all_inventory, item)
+    if all_inventory[item].nil?
+      all_inventory[item] = Hash.new(0)
+    end
+  end
+
+  def collect_food_truck(all_inventory, item, truck)
+    if all_inventory[item][:food_trucks] == 0
+      all_inventory[item][:food_trucks] = [truck]
+    else
+      all_inventory[item][:food_trucks] << truck
     end
   end
 
